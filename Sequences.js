@@ -59,3 +59,6 @@ Note:
   The array might have nested arrays of any length.
   If the array contains less than two values (or just has empty arrays) return 1.
 */
+
+
+// Solution
