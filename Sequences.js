@@ -80,3 +80,45 @@ const findCombos = array => {
 }
 
 // or
+
+function findCombos(array) {
+  // array.length! to get how many ways the items can be arranged
+  let factorial = function(num) {
+      if (num < 2) return 1;
+      return num * factorial(num - 1);
+  };
+  
+  // Get a map of the values and how many times they repeated
+  // e.g. [1, 2, 2] -> {1: 1, 2: 2} 
+  let ocurrences = function(array, obj) {
+      obj = obj || {};
+      
+      array.forEach(function(val) {
+         if (val instanceof Array) return ocurrences(val, obj);
+         if (val in obj) {
+             obj[val] += 1;
+         } else {
+             obj[val] = 1;
+         }
+      });
+      return obj;
+  };
+  
+  let map = ocurrences(array);
+  
+  // We'll use the formula (length!/repetition! * repet..)
+  // First calculate the numerator
+  let numer = Object.keys(map).reduce(function(prev, curr) {
+      return prev + map[curr];
+  }, 0);
+  
+  // Now multiplicate the repetitions factorials and divide
+  // the numerator by the denominator giving us the result
+  //
+  // For {1: 2, 3: 1, 2: 4}  
+  // 7!   *   1   *  1  *  1      = 7! / 2!1!4! = 105
+  //          2!     1!    4!
+  return Object.keys(map).reduce(function(prev, curr) {
+      return prev * (1 / factorial(map[curr]));
+  }, factorial(numer));
+}
