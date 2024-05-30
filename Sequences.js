@@ -62,3 +62,19 @@ Note:
 
 
 // Solution
+
+const factorial = n => n < 2 ? n : n * factorial(n - 1);
+const flatten = array => Array.isArray(array) ? [].concat(...array.map(flatten)) : array;
+const findCombos = array => {
+  let flat = flatten(array);
+  if (!flat.length)
+    return 1;
+
+  let counts = flat.reduce((a, b) => (a[b] = a[b] || 0, a[b]++, a), {});
+  let denom = 1;
+
+  for (let num in counts)
+    denom *= factorial(counts[num]);
+
+  return factorial(flat.length) / denom;
+}
