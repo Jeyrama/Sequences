@@ -78,3 +78,5 @@ const findCombos = array => {
 
   return factorial(flat.length) / denom;
 }
+
+// or
